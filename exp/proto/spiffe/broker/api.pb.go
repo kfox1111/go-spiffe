@@ -316,6 +316,124 @@ func (x *KubernetesObjectReference) GetUid() string {
 	return ""
 }
 
+// The Selector message conveys a single implementation-defined workload
+// selector as a type/value pair. The interpretation of both fields is
+// implementation-defined; this specification does not mandate a particular
+// selector vocabulary.
+type Selector struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. The type of the selector. MUST NOT be empty and MUST NOT
+	// contain the `:` character.
+	Type string `protobuf:"bytes,1,opt,name=type,proto3" json:"type,omitempty"`
+	// Required. The value of the selector. MUST NOT be empty.
+	Value         string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Selector) Reset() {
+	*x = Selector{}
+	mi := &file_api_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Selector) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Selector) ProtoMessage() {}
+
+func (x *Selector) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Selector.ProtoReflect.Descriptor instead.
+func (*Selector) Descriptor() ([]byte, []int) {
+	return file_api_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *Selector) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *Selector) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+// The SelectorReference message conveys a workload identified by a set of
+// selectors asserted by the broker, rather than one attested by the SPIFFE
+// implementation. It is intended for brokers that perform their own workload
+// attestation using mechanisms the implementation does not itself support, and
+// that map the result onto the implementation's selector vocabulary.
+//
+// Unlike the other reference types, the implementation cannot independently
+// verify a SelectorReference: there is no object to resolve and no process to
+// inspect, so the selectors MUST be treated as already attested. A broker able
+// to use this reference type can therefore obtain SVIDs for any identity whose
+// selectors it can name. Implementations MUST NOT accept this reference type
+// from a broker that has not been explicitly authorized to assert selectors,
+// and MUST NOT treat a general grant of "any reference type" as such an
+// authorization.
+type SelectorReference struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. The selectors describing the workload. MUST NOT be empty.
+	Selectors     []*Selector `protobuf:"bytes,1,rep,name=selectors,proto3" json:"selectors,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SelectorReference) Reset() {
+	*x = SelectorReference{}
+	mi := &file_api_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SelectorReference) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SelectorReference) ProtoMessage() {}
+
+func (x *SelectorReference) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SelectorReference.ProtoReflect.Descriptor instead.
+func (*SelectorReference) Descriptor() ([]byte, []int) {
+	return file_api_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *SelectorReference) GetSelectors() []*Selector {
+	if x != nil {
+		return x.Selectors
+	}
+	return nil
+}
+
 // The SubscribeToX509SVIDRequest message conveys parameters for requesting an X.509-SVID.
 type SubscribeToX509SVIDRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -327,7 +445,7 @@ type SubscribeToX509SVIDRequest struct {
 
 func (x *SubscribeToX509SVIDRequest) Reset() {
 	*x = SubscribeToX509SVIDRequest{}
-	mi := &file_api_proto_msgTypes[5]
+	mi := &file_api_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -339,7 +457,7 @@ func (x *SubscribeToX509SVIDRequest) String() string {
 func (*SubscribeToX509SVIDRequest) ProtoMessage() {}
 
 func (x *SubscribeToX509SVIDRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[5]
+	mi := &file_api_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -352,7 +470,7 @@ func (x *SubscribeToX509SVIDRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubscribeToX509SVIDRequest.ProtoReflect.Descriptor instead.
 func (*SubscribeToX509SVIDRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{5}
+	return file_api_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *SubscribeToX509SVIDRequest) GetReference() *WorkloadReference {
@@ -382,7 +500,7 @@ type SubscribeToX509SVIDResponse struct {
 
 func (x *SubscribeToX509SVIDResponse) Reset() {
 	*x = SubscribeToX509SVIDResponse{}
-	mi := &file_api_proto_msgTypes[6]
+	mi := &file_api_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -394,7 +512,7 @@ func (x *SubscribeToX509SVIDResponse) String() string {
 func (*SubscribeToX509SVIDResponse) ProtoMessage() {}
 
 func (x *SubscribeToX509SVIDResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[6]
+	mi := &file_api_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -407,7 +525,7 @@ func (x *SubscribeToX509SVIDResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubscribeToX509SVIDResponse.ProtoReflect.Descriptor instead.
 func (*SubscribeToX509SVIDResponse) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{6}
+	return file_api_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *SubscribeToX509SVIDResponse) GetSvids() []*X509SVID {
@@ -455,7 +573,7 @@ type X509SVID struct {
 
 func (x *X509SVID) Reset() {
 	*x = X509SVID{}
-	mi := &file_api_proto_msgTypes[7]
+	mi := &file_api_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -467,7 +585,7 @@ func (x *X509SVID) String() string {
 func (*X509SVID) ProtoMessage() {}
 
 func (x *X509SVID) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[7]
+	mi := &file_api_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -480,7 +598,7 @@ func (x *X509SVID) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use X509SVID.ProtoReflect.Descriptor instead.
 func (*X509SVID) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{7}
+	return file_api_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *X509SVID) GetSpiffeId() string {
@@ -530,7 +648,7 @@ type SubscribeToX509BundlesRequest struct {
 
 func (x *SubscribeToX509BundlesRequest) Reset() {
 	*x = SubscribeToX509BundlesRequest{}
-	mi := &file_api_proto_msgTypes[8]
+	mi := &file_api_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -542,7 +660,7 @@ func (x *SubscribeToX509BundlesRequest) String() string {
 func (*SubscribeToX509BundlesRequest) ProtoMessage() {}
 
 func (x *SubscribeToX509BundlesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[8]
+	mi := &file_api_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -555,7 +673,7 @@ func (x *SubscribeToX509BundlesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubscribeToX509BundlesRequest.ProtoReflect.Descriptor instead.
 func (*SubscribeToX509BundlesRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{8}
+	return file_api_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *SubscribeToX509BundlesRequest) GetReference() *WorkloadReference {
@@ -581,7 +699,7 @@ type SubscribeToX509BundlesResponse struct {
 
 func (x *SubscribeToX509BundlesResponse) Reset() {
 	*x = SubscribeToX509BundlesResponse{}
-	mi := &file_api_proto_msgTypes[9]
+	mi := &file_api_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -593,7 +711,7 @@ func (x *SubscribeToX509BundlesResponse) String() string {
 func (*SubscribeToX509BundlesResponse) ProtoMessage() {}
 
 func (x *SubscribeToX509BundlesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[9]
+	mi := &file_api_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -606,7 +724,7 @@ func (x *SubscribeToX509BundlesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubscribeToX509BundlesResponse.ProtoReflect.Descriptor instead.
 func (*SubscribeToX509BundlesResponse) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{9}
+	return file_api_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *SubscribeToX509BundlesResponse) GetCrl() [][]byte {
@@ -639,7 +757,7 @@ type FetchJWTSVIDRequest struct {
 
 func (x *FetchJWTSVIDRequest) Reset() {
 	*x = FetchJWTSVIDRequest{}
-	mi := &file_api_proto_msgTypes[10]
+	mi := &file_api_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -651,7 +769,7 @@ func (x *FetchJWTSVIDRequest) String() string {
 func (*FetchJWTSVIDRequest) ProtoMessage() {}
 
 func (x *FetchJWTSVIDRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[10]
+	mi := &file_api_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -664,7 +782,7 @@ func (x *FetchJWTSVIDRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FetchJWTSVIDRequest.ProtoReflect.Descriptor instead.
 func (*FetchJWTSVIDRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{10}
+	return file_api_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *FetchJWTSVIDRequest) GetReference() *WorkloadReference {
@@ -699,7 +817,7 @@ type FetchJWTSVIDResponse struct {
 
 func (x *FetchJWTSVIDResponse) Reset() {
 	*x = FetchJWTSVIDResponse{}
-	mi := &file_api_proto_msgTypes[11]
+	mi := &file_api_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -711,7 +829,7 @@ func (x *FetchJWTSVIDResponse) String() string {
 func (*FetchJWTSVIDResponse) ProtoMessage() {}
 
 func (x *FetchJWTSVIDResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[11]
+	mi := &file_api_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -724,7 +842,7 @@ func (x *FetchJWTSVIDResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FetchJWTSVIDResponse.ProtoReflect.Descriptor instead.
 func (*FetchJWTSVIDResponse) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{11}
+	return file_api_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *FetchJWTSVIDResponse) GetSvids() []*JWTSVID {
@@ -752,7 +870,7 @@ type JWTSVID struct {
 
 func (x *JWTSVID) Reset() {
 	*x = JWTSVID{}
-	mi := &file_api_proto_msgTypes[12]
+	mi := &file_api_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -764,7 +882,7 @@ func (x *JWTSVID) String() string {
 func (*JWTSVID) ProtoMessage() {}
 
 func (x *JWTSVID) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[12]
+	mi := &file_api_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -777,7 +895,7 @@ func (x *JWTSVID) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JWTSVID.ProtoReflect.Descriptor instead.
 func (*JWTSVID) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{12}
+	return file_api_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *JWTSVID) GetSpiffeId() string {
@@ -812,7 +930,7 @@ type SubscribeToJWTBundlesRequest struct {
 
 func (x *SubscribeToJWTBundlesRequest) Reset() {
 	*x = SubscribeToJWTBundlesRequest{}
-	mi := &file_api_proto_msgTypes[13]
+	mi := &file_api_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -824,7 +942,7 @@ func (x *SubscribeToJWTBundlesRequest) String() string {
 func (*SubscribeToJWTBundlesRequest) ProtoMessage() {}
 
 func (x *SubscribeToJWTBundlesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[13]
+	mi := &file_api_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -837,7 +955,7 @@ func (x *SubscribeToJWTBundlesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubscribeToJWTBundlesRequest.ProtoReflect.Descriptor instead.
 func (*SubscribeToJWTBundlesRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{13}
+	return file_api_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *SubscribeToJWTBundlesRequest) GetReference() *WorkloadReference {
@@ -859,7 +977,7 @@ type SubscribeToJWTBundlesResponse struct {
 
 func (x *SubscribeToJWTBundlesResponse) Reset() {
 	*x = SubscribeToJWTBundlesResponse{}
-	mi := &file_api_proto_msgTypes[14]
+	mi := &file_api_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -871,7 +989,7 @@ func (x *SubscribeToJWTBundlesResponse) String() string {
 func (*SubscribeToJWTBundlesResponse) ProtoMessage() {}
 
 func (x *SubscribeToJWTBundlesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_proto_msgTypes[14]
+	mi := &file_api_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -884,7 +1002,7 @@ func (x *SubscribeToJWTBundlesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubscribeToJWTBundlesResponse.ProtoReflect.Descriptor instead.
 func (*SubscribeToJWTBundlesResponse) Descriptor() ([]byte, []int) {
-	return file_api_proto_rawDescGZIP(), []int{14}
+	return file_api_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *SubscribeToJWTBundlesResponse) GetBundles() map[string][]byte {
@@ -912,7 +1030,12 @@ const file_api_proto_rawDesc = "" +
 	"\x19KubernetesObjectReference\x127\n" +
 	"\x04type\x18\x01 \x01(\v2#.spiffe.broker.KubernetesObjectTypeR\x04type\x124\n" +
 	"\x03key\x18\x02 \x01(\v2\".spiffe.broker.KubernetesObjectKeyR\x03key\x12\x10\n" +
-	"\x03uid\x18\x03 \x01(\tR\x03uid\"\\\n" +
+	"\x03uid\x18\x03 \x01(\tR\x03uid\"4\n" +
+	"\bSelector\x12\x12\n" +
+	"\x04type\x18\x01 \x01(\tR\x04type\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value\"J\n" +
+	"\x11SelectorReference\x125\n" +
+	"\tselectors\x18\x01 \x03(\v2\x17.spiffe.broker.SelectorR\tselectors\"\\\n" +
 	"\x1aSubscribeToX509SVIDRequest\x12>\n" +
 	"\treference\x18\x01 \x01(\v2 .spiffe.broker.WorkloadReferenceR\treference\"\x92\x02\n" +
 	"\x1bSubscribeToX509SVIDResponse\x12-\n" +
@@ -971,54 +1094,57 @@ func file_api_proto_rawDescGZIP() []byte {
 	return file_api_proto_rawDescData
 }
 
-var file_api_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_api_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_api_proto_goTypes = []any{
 	(*WorkloadReference)(nil),              // 0: spiffe.broker.WorkloadReference
 	(*WorkloadPIDReference)(nil),           // 1: spiffe.broker.WorkloadPIDReference
 	(*KubernetesObjectType)(nil),           // 2: spiffe.broker.KubernetesObjectType
 	(*KubernetesObjectKey)(nil),            // 3: spiffe.broker.KubernetesObjectKey
 	(*KubernetesObjectReference)(nil),      // 4: spiffe.broker.KubernetesObjectReference
-	(*SubscribeToX509SVIDRequest)(nil),     // 5: spiffe.broker.SubscribeToX509SVIDRequest
-	(*SubscribeToX509SVIDResponse)(nil),    // 6: spiffe.broker.SubscribeToX509SVIDResponse
-	(*X509SVID)(nil),                       // 7: spiffe.broker.X509SVID
-	(*SubscribeToX509BundlesRequest)(nil),  // 8: spiffe.broker.SubscribeToX509BundlesRequest
-	(*SubscribeToX509BundlesResponse)(nil), // 9: spiffe.broker.SubscribeToX509BundlesResponse
-	(*FetchJWTSVIDRequest)(nil),            // 10: spiffe.broker.FetchJWTSVIDRequest
-	(*FetchJWTSVIDResponse)(nil),           // 11: spiffe.broker.FetchJWTSVIDResponse
-	(*JWTSVID)(nil),                        // 12: spiffe.broker.JWTSVID
-	(*SubscribeToJWTBundlesRequest)(nil),   // 13: spiffe.broker.SubscribeToJWTBundlesRequest
-	(*SubscribeToJWTBundlesResponse)(nil),  // 14: spiffe.broker.SubscribeToJWTBundlesResponse
-	nil,                                    // 15: spiffe.broker.SubscribeToX509SVIDResponse.FederatedBundlesEntry
-	nil,                                    // 16: spiffe.broker.SubscribeToX509BundlesResponse.BundlesEntry
-	nil,                                    // 17: spiffe.broker.SubscribeToJWTBundlesResponse.BundlesEntry
-	(*anypb.Any)(nil),                      // 18: google.protobuf.Any
+	(*Selector)(nil),                       // 5: spiffe.broker.Selector
+	(*SelectorReference)(nil),              // 6: spiffe.broker.SelectorReference
+	(*SubscribeToX509SVIDRequest)(nil),     // 7: spiffe.broker.SubscribeToX509SVIDRequest
+	(*SubscribeToX509SVIDResponse)(nil),    // 8: spiffe.broker.SubscribeToX509SVIDResponse
+	(*X509SVID)(nil),                       // 9: spiffe.broker.X509SVID
+	(*SubscribeToX509BundlesRequest)(nil),  // 10: spiffe.broker.SubscribeToX509BundlesRequest
+	(*SubscribeToX509BundlesResponse)(nil), // 11: spiffe.broker.SubscribeToX509BundlesResponse
+	(*FetchJWTSVIDRequest)(nil),            // 12: spiffe.broker.FetchJWTSVIDRequest
+	(*FetchJWTSVIDResponse)(nil),           // 13: spiffe.broker.FetchJWTSVIDResponse
+	(*JWTSVID)(nil),                        // 14: spiffe.broker.JWTSVID
+	(*SubscribeToJWTBundlesRequest)(nil),   // 15: spiffe.broker.SubscribeToJWTBundlesRequest
+	(*SubscribeToJWTBundlesResponse)(nil),  // 16: spiffe.broker.SubscribeToJWTBundlesResponse
+	nil,                                    // 17: spiffe.broker.SubscribeToX509SVIDResponse.FederatedBundlesEntry
+	nil,                                    // 18: spiffe.broker.SubscribeToX509BundlesResponse.BundlesEntry
+	nil,                                    // 19: spiffe.broker.SubscribeToJWTBundlesResponse.BundlesEntry
+	(*anypb.Any)(nil),                      // 20: google.protobuf.Any
 }
 var file_api_proto_depIdxs = []int32{
-	18, // 0: spiffe.broker.WorkloadReference.reference:type_name -> google.protobuf.Any
+	20, // 0: spiffe.broker.WorkloadReference.reference:type_name -> google.protobuf.Any
 	2,  // 1: spiffe.broker.KubernetesObjectReference.type:type_name -> spiffe.broker.KubernetesObjectType
 	3,  // 2: spiffe.broker.KubernetesObjectReference.key:type_name -> spiffe.broker.KubernetesObjectKey
-	0,  // 3: spiffe.broker.SubscribeToX509SVIDRequest.reference:type_name -> spiffe.broker.WorkloadReference
-	7,  // 4: spiffe.broker.SubscribeToX509SVIDResponse.svids:type_name -> spiffe.broker.X509SVID
-	15, // 5: spiffe.broker.SubscribeToX509SVIDResponse.federated_bundles:type_name -> spiffe.broker.SubscribeToX509SVIDResponse.FederatedBundlesEntry
-	0,  // 6: spiffe.broker.SubscribeToX509BundlesRequest.reference:type_name -> spiffe.broker.WorkloadReference
-	16, // 7: spiffe.broker.SubscribeToX509BundlesResponse.bundles:type_name -> spiffe.broker.SubscribeToX509BundlesResponse.BundlesEntry
-	0,  // 8: spiffe.broker.FetchJWTSVIDRequest.reference:type_name -> spiffe.broker.WorkloadReference
-	12, // 9: spiffe.broker.FetchJWTSVIDResponse.svids:type_name -> spiffe.broker.JWTSVID
-	0,  // 10: spiffe.broker.SubscribeToJWTBundlesRequest.reference:type_name -> spiffe.broker.WorkloadReference
-	17, // 11: spiffe.broker.SubscribeToJWTBundlesResponse.bundles:type_name -> spiffe.broker.SubscribeToJWTBundlesResponse.BundlesEntry
-	5,  // 12: spiffe.broker.API.SubscribeToX509SVID:input_type -> spiffe.broker.SubscribeToX509SVIDRequest
-	8,  // 13: spiffe.broker.API.SubscribeToX509Bundles:input_type -> spiffe.broker.SubscribeToX509BundlesRequest
-	10, // 14: spiffe.broker.API.FetchJWTSVID:input_type -> spiffe.broker.FetchJWTSVIDRequest
-	13, // 15: spiffe.broker.API.SubscribeToJWTBundles:input_type -> spiffe.broker.SubscribeToJWTBundlesRequest
-	6,  // 16: spiffe.broker.API.SubscribeToX509SVID:output_type -> spiffe.broker.SubscribeToX509SVIDResponse
-	9,  // 17: spiffe.broker.API.SubscribeToX509Bundles:output_type -> spiffe.broker.SubscribeToX509BundlesResponse
-	11, // 18: spiffe.broker.API.FetchJWTSVID:output_type -> spiffe.broker.FetchJWTSVIDResponse
-	14, // 19: spiffe.broker.API.SubscribeToJWTBundles:output_type -> spiffe.broker.SubscribeToJWTBundlesResponse
-	16, // [16:20] is the sub-list for method output_type
-	12, // [12:16] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	5,  // 3: spiffe.broker.SelectorReference.selectors:type_name -> spiffe.broker.Selector
+	0,  // 4: spiffe.broker.SubscribeToX509SVIDRequest.reference:type_name -> spiffe.broker.WorkloadReference
+	9,  // 5: spiffe.broker.SubscribeToX509SVIDResponse.svids:type_name -> spiffe.broker.X509SVID
+	17, // 6: spiffe.broker.SubscribeToX509SVIDResponse.federated_bundles:type_name -> spiffe.broker.SubscribeToX509SVIDResponse.FederatedBundlesEntry
+	0,  // 7: spiffe.broker.SubscribeToX509BundlesRequest.reference:type_name -> spiffe.broker.WorkloadReference
+	18, // 8: spiffe.broker.SubscribeToX509BundlesResponse.bundles:type_name -> spiffe.broker.SubscribeToX509BundlesResponse.BundlesEntry
+	0,  // 9: spiffe.broker.FetchJWTSVIDRequest.reference:type_name -> spiffe.broker.WorkloadReference
+	14, // 10: spiffe.broker.FetchJWTSVIDResponse.svids:type_name -> spiffe.broker.JWTSVID
+	0,  // 11: spiffe.broker.SubscribeToJWTBundlesRequest.reference:type_name -> spiffe.broker.WorkloadReference
+	19, // 12: spiffe.broker.SubscribeToJWTBundlesResponse.bundles:type_name -> spiffe.broker.SubscribeToJWTBundlesResponse.BundlesEntry
+	7,  // 13: spiffe.broker.API.SubscribeToX509SVID:input_type -> spiffe.broker.SubscribeToX509SVIDRequest
+	10, // 14: spiffe.broker.API.SubscribeToX509Bundles:input_type -> spiffe.broker.SubscribeToX509BundlesRequest
+	12, // 15: spiffe.broker.API.FetchJWTSVID:input_type -> spiffe.broker.FetchJWTSVIDRequest
+	15, // 16: spiffe.broker.API.SubscribeToJWTBundles:input_type -> spiffe.broker.SubscribeToJWTBundlesRequest
+	8,  // 17: spiffe.broker.API.SubscribeToX509SVID:output_type -> spiffe.broker.SubscribeToX509SVIDResponse
+	11, // 18: spiffe.broker.API.SubscribeToX509Bundles:output_type -> spiffe.broker.SubscribeToX509BundlesResponse
+	13, // 19: spiffe.broker.API.FetchJWTSVID:output_type -> spiffe.broker.FetchJWTSVIDResponse
+	16, // 20: spiffe.broker.API.SubscribeToJWTBundles:output_type -> spiffe.broker.SubscribeToJWTBundlesResponse
+	17, // [17:21] is the sub-list for method output_type
+	13, // [13:17] is the sub-list for method input_type
+	13, // [13:13] is the sub-list for extension type_name
+	13, // [13:13] is the sub-list for extension extendee
+	0,  // [0:13] is the sub-list for field type_name
 }
 
 func init() { file_api_proto_init() }
@@ -1032,7 +1158,7 @@ func file_api_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_proto_rawDesc), len(file_api_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   18,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -105,6 +105,38 @@ message KubernetesObjectReference {
     string uid = 3;
 }
 
+// The Selector message conveys a single implementation-defined workload
+// selector as a type/value pair. The interpretation of both fields is
+// implementation-defined; this specification does not mandate a particular
+// selector vocabulary.
+message Selector {
+    // Required. The type of the selector. MUST NOT be empty and MUST NOT
+    // contain the `:` character.
+    string type = 1;
+
+    // Required. The value of the selector. MUST NOT be empty.
+    string value = 2;
+}
+
+// The SelectorReference message conveys a workload identified by a set of
+// selectors asserted by the broker, rather than one attested by the SPIFFE
+// implementation. It is intended for brokers that perform their own workload
+// attestation using mechanisms the implementation does not itself support, and
+// that map the result onto the implementation's selector vocabulary.
+//
+// Unlike the other reference types, the implementation cannot independently
+// verify a SelectorReference: there is no object to resolve and no process to
+// inspect, so the selectors MUST be treated as already attested. A broker able
+// to use this reference type can therefore obtain SVIDs for any identity whose
+// selectors it can name. Implementations MUST NOT accept this reference type
+// from a broker that has not been explicitly authorized to assert selectors,
+// and MUST NOT treat a general grant of "any reference type" as such an
+// authorization.
+message SelectorReference {
+    // Required. The selectors describing the workload. MUST NOT be empty.
+    repeated Selector selectors = 1;
+}
+
 // The SubscribeToX509SVIDRequest message conveys parameters for requesting an X.509-SVID.
 message SubscribeToX509SVIDRequest {
     // Required. The reference identifying the workload.
